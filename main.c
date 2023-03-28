@@ -5,9 +5,7 @@
 #include <ctype.h>
 void affichage_motif_couleur(char * motif , char * phrase){
     int i;
-    //motif = "elephant";
-    //phrase ="Il y avait un elephant ici";
-    char * ptr =strstr(phrase,motif);
+    char * ptr = strstr(phrase,motif);
     int indice = ptr - phrase;
     for(i=0;i<indice;i++){
         printf("%c",phrase[i]);
@@ -19,7 +17,8 @@ void affichage_motif_couleur(char * motif , char * phrase){
     printf("\033[0m");
     for(i=i;phrase[i]!='\0';i++){
         printf("%c",phrase[i]);
-    }    
+    }  
+
 }
 
 
@@ -39,7 +38,7 @@ void    lafonctionquirigolepas(char * motif,char * fichier ,int tab[],int nombre
     FILE *fich;
     char ** phrases = (char ** ) malloc (5001 * sizeof(char *));            /* 5001 phrases max avec 500 caractere / phrase max*/
     char * phrase =(char *) malloc(500 * sizeof(char));
-    char *result;
+    char *result ;
     int ligne = 1;
     int optl = 0;
     int actu = 0;
@@ -322,6 +321,3 @@ int main(int argc, char *argv[])
     free(motif);
     exit(0);
 }
-
-
-
