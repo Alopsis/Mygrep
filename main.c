@@ -6,10 +6,8 @@
 void affichage_motif_couleur(char * motif , char * phrase){
     int i,j;
     char * reste ;
-
     char * ptr = strstr(phrase,motif);
     int indice = ptr - phrase;
-    char temp[100];
     int acc = 0;
     /* On print la phrase normale jusqu'a avant le motif */
             printf("\033[0m");
@@ -24,10 +22,7 @@ void affichage_motif_couleur(char * motif , char * phrase){
         printf("%c",phrase[i]);
     }
 
-    for(j=i;phrase[j]!='\0';j++){
-        temp[acc] = phrase[j];
-        acc++;
-    }
+
     /* i = indice */
     reste = &phrase[i];
     while ( strstr(reste,motif) != NULL){
