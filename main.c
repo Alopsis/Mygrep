@@ -4,9 +4,12 @@
 #include <getopt.h>
 #include <ctype.h>
 void affichage_motif_couleur(char * motif , char * phrase){
-    int i;
+    int i,j;
     char * ptr = strstr(phrase,motif);
     int indice = ptr - phrase;
+    char temp[100];
+    int acc = 0;
+    printf("lindice = %d \n",indice);
     for(i=0;i<indice;i++){
         printf("%c",phrase[i]);
     }
@@ -14,6 +17,37 @@ void affichage_motif_couleur(char * motif , char * phrase){
     for(i=indice;i<indice+strlen(motif);i++){
         printf("%c",phrase[i]);
     }
+
+    
+    for(j=i;phrase[j]!='\0';j++){
+        temp[acc] = phrase[j];
+        acc++;
+    }
+    printf("\n->%s\n \n",temp);
+    /*
+    while( strstr(temp,motif) != NULL){
+        ptr = strstr(temp,motif);
+        // marche po 
+        indice = ptr - phrase;
+        printf("Le prochain indice est dans %d caractere \n",indice);
+        printf("\033[0m");
+        for(i=0;i<indice ;i++){
+            printf("[%c]",phrase[i]);
+        }
+
+        printf("\033[1;31m");
+        for(i=indice;i<indice+strlen(motif);i++){
+            printf("%c",phrase[i]);
+        }
+        for(j=i;phrase[j]!='\0';j++){
+            temp[acc] = phrase[j];
+            acc++;
+            
+        }
+
+    }
+    */
+
     printf("\033[0m");
     for(i=i;phrase[i]!='\0';i++){
         printf("%c",phrase[i]);
