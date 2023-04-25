@@ -5,54 +5,50 @@
 #include <ctype.h>
 void affichage_motif_couleur(char * motif , char * phrase){
     int i,j;
+    char * reste ;
+
     char * ptr = strstr(phrase,motif);
     int indice = ptr - phrase;
     char temp[100];
     int acc = 0;
-    printf("lindice = %d \n",indice);
+    /* On print la phrase normale jusqu'a avant le motif */
+            printf("\033[0m");
+
     for(i=0;i<indice;i++){
         printf("%c",phrase[i]);
     }
+
+    /* On print le motif en rouge */
     printf("\033[1;31m");
     for(i=indice;i<indice+strlen(motif);i++){
         printf("%c",phrase[i]);
     }
 
-    
     for(j=i;phrase[j]!='\0';j++){
         temp[acc] = phrase[j];
         acc++;
     }
-    printf("\n->%s\n \n",temp);
-    /*
-    while( strstr(temp,motif) != NULL){
-        ptr = strstr(temp,motif);
-        // marche po 
-        indice = ptr - phrase;
-        printf("Le prochain indice est dans %d caractere \n",indice);
+    /* i = indice */
+    reste = &phrase[i];
+    while ( strstr(reste,motif) != NULL){
+
         printf("\033[0m");
-        for(i=0;i<indice ;i++){
-            printf("[%c]",phrase[i]);
+        ptr = strstr(reste,motif);
+        indice = ptr - reste;
+        for(i=0;i<indice ; i++){
+            printf("%c",reste[i]);
         }
 
         printf("\033[1;31m");
-        for(i=indice;i<indice+strlen(motif);i++){
-            printf("%c",phrase[i]);
+        for(i=i;i<indice+strlen(motif);i++){
+            printf("%c",reste[i]);
         }
-        for(j=i;phrase[j]!='\0';j++){
-            temp[acc] = phrase[j];
-            acc++;
-            
-        }
+        printf("\033[0m");
+
+        reste = &reste[i];
 
     }
-    */
-
-    printf("\033[0m");
-    for(i=i;phrase[i]!='\0';i++){
-        printf("%c",phrase[i]);
-    }  
-
+    printf(" \n");
 }
 
 
@@ -68,13 +64,14 @@ char * convertir_under(char * motif){
     return motif;
 }
 
-void    lafonctionquirigolepas(char * motif,char * fichier ,int tab[],int nombreA , int nombreB,int nbfichier){
+void lafonctionquirigolepas(char * motif,char * fichier ,int tab[],int nombreA , int nombreB,int nbfichier){
     FILE *fich;
     char ** phrases = (char ** ) malloc (5001 * sizeof(char *));            /* 5001 phrases max avec 500 caractere / phrase max*/
-    char * phrase =(char *) malloc(500 * sizeof(char));
+    char * phrase =(char *) malloc(500 * sizeof(char));                     /* Chaque phrase a 500 caracteres max */
     char *result ;
     int ligne = 1;
     int optl = 0;
+                          
     int actu = 0;
     int i;
     int ii;
@@ -157,7 +154,7 @@ void    lafonctionquirigolepas(char * motif,char * fichier ,int tab[],int nombre
                 printf("\033[0m");
             }
             if(tab[1] == 0 ){
-                affichage_motif_couleur(motif,phrase);
+                affichage_motif_couleur(motif,phrase); /* erreur de retour ici */
                 //printf("->%s",phrase);
             }
         }else if ( result != NULL && acuB+4 <= ii){
@@ -165,6 +162,7 @@ void    lafonctionquirigolepas(char * motif,char * fichier ,int tab[],int nombre
         }
         else if (( tab[1] == 1 && actuB > 0 && actuB <= nombreB )){
             if(actuB == 1 ){
+                
                 affichage_motif_couleur(motif,phrases[acuB]);
             }else {
             printf("%s",phrases[acuB]);
@@ -181,12 +179,14 @@ void    lafonctionquirigolepas(char * motif,char * fichier ,int tab[],int nombre
             }
             else {
                 affichage_motif_couleur(motif,phrase);
+                
             }
             
         }
 
         ligne++;
         acuB++;
+
     }
     if ( (optl != 0 && tab[8] == 1 )|| ( optl == 0 && tab[7] == 1 )){
         printf("%s",fichier);
@@ -208,6 +208,7 @@ void    lafonctionquirigolepas(char * motif,char * fichier ,int tab[],int nombre
     phrases = NULL;
     free(phrase);
     phrase = NULL;
+
 }
 
 int recup_nombre_fichier( char * argv[]){
