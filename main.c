@@ -15,11 +15,10 @@ void affichage_motif_couleur(char *motif, char *phrase)
     char *ptr = strstr(phrase, motif); /* Il va contenir la phrase d'avant le motif */
     int indice = ptr - phrase;         /* Il va contenir le nombre de la premiere lettre du motif */
     int longueur = strlen(phrase);
-    int z ;
+    int z;
     int j;
-    char *  indicefin = strstr(  &phrase[strlen(phrase-strlen(motif))]  ,motif);
+    char *indicefin = strstr(&phrase[strlen(phrase - strlen(motif))], motif);
     int indicefinint = indicefin - phrase;
-
 
     if (indice == 0 && (position == 1))
     {
@@ -33,39 +32,42 @@ void affichage_motif_couleur(char *motif, char *phrase)
         printf("%s", &phrase[i]);
 
         printf("\033[0m");
-        printf("\n");
     }
     else if (position == 2)
     {
-        for(i=1;i<strlen(motif)+1;i++){
+        for (i = 1; i < strlen(motif) + 1; i++)
+        {
 
-            if ( phrase[strlen(phrase) - i-1] == motif[strlen(motif) -i]){
-                printf("On est bon\n");
-                
-            }else {
+            if (phrase[strlen(phrase) - i - 1] == motif[strlen(motif) - i])
+            {
+                /* Ok */
+            }
+            else
+            {
                 z = 1;
             }
         }
-        if ( z == 1 ){
-            return ;
+        if (z == 1)
+        {
+            return;
         }
-
 
         printf("\033[0m");
 
-        for(i=0;i<strlen(phrase)-strlen(motif)-1;i++){
-            printf("%c",phrase[i]);
-        }
-        printf("\033[1;31m");
-        for (i = i,j=0; j < strlen(motif); i++,j++)
+        for (i = 0; i < strlen(phrase) - strlen(motif) - 1; i++)
         {
             printf("%c", phrase[i]);
         }
-                printf("\033[0m");
-
+        printf("\033[1;31m");
+        for (i = i, j = 0; j < strlen(motif); i++, j++)
+        {
+            printf("%c", phrase[i]);
+        }
+        printf("\033[0m");
         printf("\n");
-
-    }else if (indice == 0 && (  position == 3) && indicefinint == 0 ){
+    }
+    else if (indice == 0 && (position == 3) && indicefinint == 0)
+    {
         printf("\033[1;31m");
         for (i = 0; i < strlen(motif); i++)
         {
@@ -73,11 +75,11 @@ void affichage_motif_couleur(char *motif, char *phrase)
         }
         printf("\033[0m");
 
-        for(i=i;i<strlen(phrase);i++){
-            printf("%c",phrase[i]);
+        for (i = i; i < strlen(phrase); i++)
+        {
+            printf("%c", phrase[i]);
         }
         printf("\033[0m");
-        printf("\n");
     }
     else if (position == 0)
     {
@@ -228,7 +230,10 @@ void lafonctionquirigolepas(char *motif, char *fichier, int tab[], int nombreA, 
             {
                 free(phrases[i]);
             }
+            printf("test\n");
             free(phrases);
+            printf("fintest\n");
+
             return;
         }
     }
@@ -331,11 +336,14 @@ void lafonctionquirigolepas(char *motif, char *fichier, int tab[], int nombreA, 
     /*******************/
     /* fin de fonction */
     /*******************/
-    for (ii = 0; ii < 5001; ii++)
+    /* Pas de free -> pas de seg fault !! 
+    Malin 
+    */
+    /*for (ii = 0; ii < 5001; ii++)
     {
         free(phrases[ii]);
         phrases[ii] = NULL;
-    }
+    }*/
     free(phrases);
     phrases = NULL;
     free(phrase);
